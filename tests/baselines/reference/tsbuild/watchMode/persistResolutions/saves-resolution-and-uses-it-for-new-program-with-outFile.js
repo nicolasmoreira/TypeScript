@@ -44,7 +44,7 @@ File '/user/username/projects/myproject/src/fileNotFound.jsx' does not exist.
 [7m2[0m import { something2 } from "./fileNotFound";
 [7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
 
-[[90m12:00:26 AM[0m] Found 1 error. Watching for file changes.
+[[90m12:00:28 AM[0m] Found 1 error. Watching for file changes.
 
 FileWatcher:: Added:: WatchInfo: /user/username/projects/myproject/tsconfig.json 2000 undefined Config file /user/username/projects/myproject/tsconfig.json
 DirectoryWatcher:: Added:: WatchInfo: /user/username/projects/myproject/src 1 undefined Wild card directory /user/username/projects/myproject/tsconfig.json
@@ -79,6 +79,50 @@ FsWatchesRecursive::
 
 exitCode:: ExitStatus.undefined
 
+//// [/user/username/projects/myproject/outFile.tsbuildinfo]
+{
+  "bundle": {
+    "commonSourceDirectory": "./",
+    "sourceFiles": [
+      "./src/filePresent.ts",
+      "./src/main.ts"
+    ]
+  },
+  "program": {
+    "fileInfos": {
+      "../../../../a/lib/lib.d.ts": {
+        "version": "-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }",
+        "affectsGlobalScope": true
+      },
+      "./src/filepresent.ts": {
+        "version": "11598859296-export function something() { return 10; }",
+        "affectsGlobalScope": false
+      },
+      "./src/main.ts": {
+        "version": "-18180953903-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
+        "affectsGlobalScope": false
+      }
+    },
+    "options": {
+      "module": 2,
+      "composite": true,
+      "persistResolutions": true,
+      "traceResolution": true,
+      "outFile": "./outFile.js",
+      "watch": true,
+      "extendedDiagnostics": true,
+      "configFilePath": "./tsconfig.json"
+    },
+    "referencedMap": {
+      "./src/main.ts": [
+        "./src/filepresent.ts"
+      ]
+    },
+    "exportedModulesMap": {}
+  },
+  "version": "FakeTSVersion"
+}
+
 
 Change:: Modify main file
 
@@ -91,7 +135,7 @@ import { something2 } from "./fileNotFound";something();
 Output::
 FileWatcher:: Triggered with /user/username/projects/myproject/src/main.ts 1:: WatchInfo: /user/username/projects/myproject/src/main.ts 250 undefined Source file /user/username/projects/myproject/tsconfig.json
 Elapsed:: *ms FileWatcher:: Triggered with /user/username/projects/myproject/src/main.ts 1:: WatchInfo: /user/username/projects/myproject/src/main.ts 250 undefined Source file /user/username/projects/myproject/tsconfig.json
-[[90m12:00:29 AM[0m] File change detected. Starting incremental compilation...
+[[90m12:00:31 AM[0m] File change detected. Starting incremental compilation...
 
 ======== Resolving module './filePresent' from '/user/username/projects/myproject/src/main.ts'. ========
 Module resolution kind is not specified, using 'Classic'.
@@ -110,7 +154,7 @@ File '/user/username/projects/myproject/src/fileNotFound.jsx' does not exist.
 [7m2[0m import { something2 } from "./fileNotFound";something();
 [7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
 
-[[90m12:00:30 AM[0m] Found 1 error. Watching for file changes.
+[[90m12:00:35 AM[0m] Found 1 error. Watching for file changes.
 
 
 
@@ -140,6 +184,50 @@ FsWatchesRecursive::
 
 exitCode:: ExitStatus.undefined
 
+//// [/user/username/projects/myproject/outFile.tsbuildinfo]
+{
+  "bundle": {
+    "commonSourceDirectory": "./",
+    "sourceFiles": [
+      "./src/filePresent.ts",
+      "./src/main.ts"
+    ]
+  },
+  "program": {
+    "fileInfos": {
+      "../../../../a/lib/lib.d.ts": {
+        "version": "-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }",
+        "affectsGlobalScope": true
+      },
+      "./src/filepresent.ts": {
+        "version": "11598859296-export function something() { return 10; }",
+        "affectsGlobalScope": false
+      },
+      "./src/main.ts": {
+        "version": "-22084070133-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();",
+        "affectsGlobalScope": false
+      }
+    },
+    "options": {
+      "module": 2,
+      "composite": true,
+      "persistResolutions": true,
+      "traceResolution": true,
+      "outFile": "./outFile.js",
+      "watch": true,
+      "extendedDiagnostics": true,
+      "configFilePath": "./tsconfig.json"
+    },
+    "referencedMap": {
+      "./src/main.ts": [
+        "./src/filepresent.ts"
+      ]
+    },
+    "exportedModulesMap": {}
+  },
+  "version": "FakeTSVersion"
+}
+
 
 Change:: Add new module and update main file
 
@@ -157,7 +245,7 @@ DirectoryWatcher:: Triggered with /user/username/projects/myproject/src/newFile.
 Elapsed:: *ms DirectoryWatcher:: Triggered with /user/username/projects/myproject/src/newFile.ts :: WatchInfo: /user/username/projects/myproject/src 1 undefined Wild card directory /user/username/projects/myproject/tsconfig.json
 FileWatcher:: Triggered with /user/username/projects/myproject/src/main.ts 1:: WatchInfo: /user/username/projects/myproject/src/main.ts 250 undefined Source file /user/username/projects/myproject/tsconfig.json
 Elapsed:: *ms FileWatcher:: Triggered with /user/username/projects/myproject/src/main.ts 1:: WatchInfo: /user/username/projects/myproject/src/main.ts 250 undefined Source file /user/username/projects/myproject/tsconfig.json
-[[90m12:00:35 AM[0m] File change detected. Starting incremental compilation...
+[[90m12:00:40 AM[0m] File change detected. Starting incremental compilation...
 
 FileWatcher:: Added:: WatchInfo: /user/username/projects/myproject/src/newFile.ts 250 undefined Source file /user/username/projects/myproject/tsconfig.json
 ======== Resolving module './newFile' from '/user/username/projects/myproject/src/main.ts'. ========
@@ -181,7 +269,7 @@ File '/user/username/projects/myproject/src/fileNotFound.jsx' does not exist.
 [7m2[0m import { something2 } from "./fileNotFound";something();
 [7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
 
-[[90m12:00:36 AM[0m] Found 1 error. Watching for file changes.
+[[90m12:00:44 AM[0m] Found 1 error. Watching for file changes.
 
 
 
@@ -214,6 +302,56 @@ FsWatchesRecursive::
 
 exitCode:: ExitStatus.undefined
 
+//// [/user/username/projects/myproject/outFile.tsbuildinfo]
+{
+  "bundle": {
+    "commonSourceDirectory": "./",
+    "sourceFiles": [
+      "./src/filePresent.ts",
+      "./src/newFile.ts",
+      "./src/main.ts"
+    ]
+  },
+  "program": {
+    "fileInfos": {
+      "../../../../a/lib/lib.d.ts": {
+        "version": "-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }",
+        "affectsGlobalScope": true
+      },
+      "./src/filepresent.ts": {
+        "version": "11598859296-export function something() { return 10; }",
+        "affectsGlobalScope": false
+      },
+      "./src/newfile.ts": {
+        "version": "4428918903-export function foo() { return 20; }",
+        "affectsGlobalScope": false
+      },
+      "./src/main.ts": {
+        "version": "-1814339108-import { foo } from \"./newFile\";import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();",
+        "affectsGlobalScope": false
+      }
+    },
+    "options": {
+      "module": 2,
+      "composite": true,
+      "persistResolutions": true,
+      "traceResolution": true,
+      "outFile": "./outFile.js",
+      "watch": true,
+      "extendedDiagnostics": true,
+      "configFilePath": "./tsconfig.json"
+    },
+    "referencedMap": {
+      "./src/main.ts": [
+        "./src/filepresent.ts",
+        "./src/newfile.ts"
+      ]
+    },
+    "exportedModulesMap": {}
+  },
+  "version": "FakeTSVersion"
+}
+
 
 Change:: Write file that could not be resolved
 
@@ -225,7 +363,7 @@ export function something2() { return 20; }
 Output::
 DirectoryWatcher:: Triggered with /user/username/projects/myproject/src/fileNotFound.ts :: WatchInfo: /user/username/projects/myproject/src 1 undefined Wild card directory /user/username/projects/myproject/tsconfig.json
 Elapsed:: *ms DirectoryWatcher:: Triggered with /user/username/projects/myproject/src/fileNotFound.ts :: WatchInfo: /user/username/projects/myproject/src 1 undefined Wild card directory /user/username/projects/myproject/tsconfig.json
-[[90m12:00:39 AM[0m] File change detected. Starting incremental compilation...
+[[90m12:00:47 AM[0m] File change detected. Starting incremental compilation...
 
 FileWatcher:: Added:: WatchInfo: /user/username/projects/myproject/src/fileNotFound.ts 250 undefined Source file /user/username/projects/myproject/tsconfig.json
 ======== Resolving module './newFile' from '/user/username/projects/myproject/src/main.ts'. ========
@@ -240,7 +378,7 @@ File '/user/username/projects/myproject/src/filePresent.ts' exist - use it as a 
 Module resolution kind is not specified, using 'Classic'.
 File '/user/username/projects/myproject/src/fileNotFound.ts' exist - use it as a name resolution result.
 ======== Module name './fileNotFound' was successfully resolved to '/user/username/projects/myproject/src/fileNotFound.ts'. ========
-[[90m12:00:46 AM[0m] Found 0 errors. Watching for file changes.
+[[90m12:00:55 AM[0m] Found 0 errors. Watching for file changes.
 
 
 
@@ -275,6 +413,80 @@ FsWatchesRecursive::
   {"directoryName":"/user/username/projects/myproject/src","fallbackPollingInterval":500,"fallbackOptions":{"watchFile":"PriorityPollingInterval"}}
 
 exitCode:: ExitStatus.undefined
+
+//// [/user/username/projects/myproject/outFile.tsbuildinfo]
+{
+  "bundle": {
+    "commonSourceDirectory": "./",
+    "sourceFiles": [
+      "./src/fileNotFound.ts",
+      "./src/filePresent.ts",
+      "./src/newFile.ts",
+      "./src/main.ts"
+    ],
+    "js": {
+      "sections": [
+        {
+          "pos": 0,
+          "end": 888,
+          "kind": "text"
+        }
+      ]
+    },
+    "dts": {
+      "sections": [
+        {
+          "pos": 0,
+          "end": 256,
+          "kind": "text"
+        }
+      ]
+    }
+  },
+  "program": {
+    "fileInfos": {
+      "../../../../a/lib/lib.d.ts": {
+        "version": "-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }",
+        "affectsGlobalScope": true
+      },
+      "./src/filenotfound.ts": {
+        "version": "-497034637-export function something2() { return 20; }",
+        "affectsGlobalScope": false
+      },
+      "./src/filepresent.ts": {
+        "version": "11598859296-export function something() { return 10; }",
+        "affectsGlobalScope": false
+      },
+      "./src/newfile.ts": {
+        "version": "4428918903-export function foo() { return 20; }",
+        "affectsGlobalScope": false
+      },
+      "./src/main.ts": {
+        "version": "-1814339108-import { foo } from \"./newFile\";import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();",
+        "affectsGlobalScope": false
+      }
+    },
+    "options": {
+      "module": 2,
+      "composite": true,
+      "persistResolutions": true,
+      "traceResolution": true,
+      "outFile": "./outFile.js",
+      "watch": true,
+      "extendedDiagnostics": true,
+      "configFilePath": "./tsconfig.json"
+    },
+    "referencedMap": {
+      "./src/main.ts": [
+        "./src/filenotfound.ts",
+        "./src/filepresent.ts",
+        "./src/newfile.ts"
+      ]
+    },
+    "exportedModulesMap": {}
+  },
+  "version": "FakeTSVersion"
+}
 
 //// [/user/username/projects/myproject/outFile.js]
 define("src/fileNotFound", ["require", "exports"], function (require, exports) {
@@ -317,36 +529,4 @@ declare module "src/newFile" {
 }
 declare module "src/main" { }
 
-
-//// [/user/username/projects/myproject/outFile.tsbuildinfo]
-{
-  "bundle": {
-    "commonSourceDirectory": "./",
-    "sourceFiles": [
-      "./src/fileNotFound.ts",
-      "./src/filePresent.ts",
-      "./src/newFile.ts",
-      "./src/main.ts"
-    ],
-    "js": {
-      "sections": [
-        {
-          "pos": 0,
-          "end": 888,
-          "kind": "text"
-        }
-      ]
-    },
-    "dts": {
-      "sections": [
-        {
-          "pos": 0,
-          "end": 256,
-          "kind": "text"
-        }
-      ]
-    }
-  },
-  "version": "FakeTSVersion"
-}
 
