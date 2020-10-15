@@ -722,7 +722,7 @@ Input::
 
 
 Output::
-/lib/tsc --b /src/tests --cleanResolutions
+/lib/tsc --b /src/tests --cleanPersistedProgram
 exitCode:: ExitStatus.Success
 
 

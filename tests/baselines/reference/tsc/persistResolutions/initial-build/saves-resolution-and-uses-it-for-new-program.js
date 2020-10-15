@@ -543,7 +543,7 @@ Input::
 
 
 Output::
-/lib/tsc --p src/project --cleanResolutions
+/lib/tsc --p src/project --cleanPersistedProgram
 exitCode:: ExitStatus.Success
 
 
