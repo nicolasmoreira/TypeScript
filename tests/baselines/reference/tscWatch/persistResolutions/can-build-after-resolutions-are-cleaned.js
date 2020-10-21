@@ -187,7 +187,7 @@ Elapsed:: *ms DirectoryWatcher:: Added:: WatchInfo: /user/username/projects/mypr
 [7m3[0m import { something2 } from "./fileNotFound";
 [7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
 
-[[90m12:00:45 AM[0m] Found 2 errors. Watching for file changes.
+[[90m12:00:48 AM[0m] Found 2 errors. Watching for file changes.
 
 DirectoryWatcher:: Added:: WatchInfo: /user/username/projects/myproject/src 1 undefined Wild card directory
 Elapsed:: *ms DirectoryWatcher:: Added:: WatchInfo: /user/username/projects/myproject/src 1 undefined Wild card directory
@@ -226,6 +226,213 @@ FsWatchesRecursive::
 
 exitCode:: ExitStatus.undefined
 
+//// [/user/username/projects/myproject/tsconfig.tsbuildinfo]
+{
+  "program": {
+    "fileInfos": {
+      "../../../../a/lib/lib.d.ts": {
+        "version": "-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }",
+        "signature": "-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }",
+        "affectsGlobalScope": true
+      },
+      "./src/filepresent.ts": {
+        "version": "11598859296-export function something() { return 10; }",
+        "signature": "-13601649692-export declare function something(): number;\n",
+        "affectsGlobalScope": false
+      },
+      "./src/anotherfilereusingresolution.ts": {
+        "version": "-18180953903-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
+        "signature": "-3531856636-export {};\n",
+        "affectsGlobalScope": false
+      },
+      "./src/main.ts": {
+        "version": "-9387417376-import { something } from \"./filePresent\";\nimport { something as something1 } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
+        "signature": "-3531856636-export {};\n",
+        "affectsGlobalScope": false
+      }
+    },
+    "options": {
+      "module": 2,
+      "composite": true,
+      "persistResolutions": true,
+      "traceResolution": true,
+      "project": "./",
+      "watch": true,
+      "extendedDiagnostics": true,
+      "configFilePath": "./tsconfig.json"
+    },
+    "referencedMap": {
+      "./src/anotherfilereusingresolution.ts": [
+        "./src/filepresent.ts"
+      ],
+      "./src/main.ts": [
+        "./src/filepresent.ts"
+      ]
+    },
+    "exportedModulesMap": {},
+    "semanticDiagnosticsPerFile": [
+      "../../../../a/lib/lib.d.ts",
+      [
+        "./src/anotherfilereusingresolution.ts",
+        [
+          {
+            "file": "./src/anotherfilereusingresolution.ts",
+            "start": 70,
+            "length": 16,
+            "messageText": "Cannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?",
+            "category": 1,
+            "code": 2792
+          }
+        ]
+      ],
+      "./src/filepresent.ts",
+      [
+        "./src/main.ts",
+        [
+          {
+            "file": "./src/main.ts",
+            "start": 127,
+            "length": 16,
+            "messageText": "Cannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?",
+            "category": 1,
+            "code": 2792
+          }
+        ]
+      ]
+    ],
+    "peristedProgram": {
+      "files": [
+        {
+          "fileName": "../../../../a/lib/lib.d.ts",
+          "originalFileName": "../../../../a/lib/lib.d.ts",
+          "path": "../../../../a/lib/lib.d.ts",
+          "resolvedPath": "../../../../a/lib/lib.d.ts",
+          "version": "-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }",
+          "flags": 0,
+          "hasNoDefaultLib": true,
+          "includeReasons": [
+            {
+              "kind": 6
+            }
+          ]
+        },
+        {
+          "fileName": "./src/filePresent.ts",
+          "originalFileName": "./src/filePresent.ts",
+          "path": "./src/filepresent.ts",
+          "resolvedPath": "./src/filepresent.ts",
+          "version": "11598859296-export function something() { return 10; }",
+          "flags": 0,
+          "includeReasons": [
+            {
+              "kind": 3,
+              "file": "./src/anotherfilereusingresolution.ts",
+              "index": 0
+            },
+            {
+              "kind": 0,
+              "index": 1
+            },
+            {
+              "kind": 3,
+              "file": "./src/main.ts",
+              "index": 0
+            },
+            {
+              "kind": 3,
+              "file": "./src/main.ts",
+              "index": 1
+            }
+          ]
+        },
+        {
+          "fileName": "./src/anotherFileReusingResolution.ts",
+          "originalFileName": "./src/anotherFileReusingResolution.ts",
+          "path": "./src/anotherfilereusingresolution.ts",
+          "resolvedPath": "./src/anotherfilereusingresolution.ts",
+          "version": "-18180953903-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
+          "flags": 0,
+          "imports": [
+            {
+              "kind": 10,
+              "text": "./filePresent"
+            },
+            {
+              "kind": 10,
+              "text": "./fileNotFound"
+            }
+          ],
+          "resolvedModules": {
+            "./filePresent": 0,
+            "./fileNotFound": 1
+          },
+          "includeReasons": [
+            {
+              "kind": 0,
+              "index": 0
+            }
+          ]
+        },
+        {
+          "fileName": "./src/main.ts",
+          "originalFileName": "./src/main.ts",
+          "path": "./src/main.ts",
+          "resolvedPath": "./src/main.ts",
+          "version": "-9387417376-import { something } from \"./filePresent\";\nimport { something as something1 } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
+          "flags": 0,
+          "imports": [
+            {
+              "kind": 10,
+              "text": "./filePresent"
+            },
+            {
+              "kind": 10,
+              "text": "./filePresent"
+            },
+            {
+              "kind": 10,
+              "text": "./fileNotFound"
+            }
+          ],
+          "resolvedModules": {
+            "./filePresent": 0,
+            "./fileNotFound": 1
+          },
+          "includeReasons": [
+            {
+              "kind": 0,
+              "index": 2
+            }
+          ]
+        }
+      ],
+      "rootFileNames": [
+        "./src/anotherFileReusingResolution.ts",
+        "./src/filePresent.ts",
+        "./src/main.ts"
+      ],
+      "resolutions": [
+        {
+          "resolvedModule": {
+            "resolvedFileName": "./src/filePresent.ts",
+            "extension": ".ts"
+          }
+        },
+        {
+          "failedLookupLocations": [
+            "./src/fileNotFound.ts",
+            "./src/fileNotFound.tsx",
+            "./src/fileNotFound.d.ts",
+            "./src/fileNotFound.js",
+            "./src/fileNotFound.jsx"
+          ]
+        }
+      ]
+    }
+  },
+  "version": "FakeTSVersion"
+}
+
 
 Change:: Modify main file
 
@@ -240,7 +447,7 @@ Output::
 FileWatcher:: Triggered with /user/username/projects/myproject/src/main.ts 1:: WatchInfo: /user/username/projects/myproject/src/main.ts 250 undefined Source file
 Scheduling update
 Elapsed:: *ms FileWatcher:: Triggered with /user/username/projects/myproject/src/main.ts 1:: WatchInfo: /user/username/projects/myproject/src/main.ts 250 undefined Source file
-[[90m12:00:48 AM[0m] File change detected. Starting incremental compilation...
+[[90m12:00:51 AM[0m] File change detected. Starting incremental compilation...
 
 Synchronizing program
 CreatingProgramWith::
@@ -259,7 +466,7 @@ Reusing resolution of module './fileNotFound' from '/user/username/projects/mypr
 [7m3[0m import { something2 } from "./fileNotFound";something();
 [7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
 
-[[90m12:00:58 AM[0m] Found 2 errors. Watching for file changes.
+[[90m12:01:01 AM[0m] Found 2 errors. Watching for file changes.
 
 
 
@@ -379,7 +586,136 @@ define(["require", "exports", "./filePresent"], function (require, exports, file
           }
         ]
       ]
-    ]
+    ],
+    "peristedProgram": {
+      "files": [
+        {
+          "fileName": "../../../../a/lib/lib.d.ts",
+          "originalFileName": "../../../../a/lib/lib.d.ts",
+          "path": "../../../../a/lib/lib.d.ts",
+          "resolvedPath": "../../../../a/lib/lib.d.ts",
+          "version": "-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }",
+          "flags": 0,
+          "hasNoDefaultLib": true,
+          "includeReasons": [
+            {
+              "kind": 6
+            }
+          ]
+        },
+        {
+          "fileName": "./src/filePresent.ts",
+          "originalFileName": "./src/filePresent.ts",
+          "path": "./src/filepresent.ts",
+          "resolvedPath": "./src/filepresent.ts",
+          "version": "11598859296-export function something() { return 10; }",
+          "flags": 0,
+          "includeReasons": [
+            {
+              "kind": 3,
+              "file": "./src/anotherfilereusingresolution.ts",
+              "index": 0
+            },
+            {
+              "kind": 0,
+              "index": 1
+            },
+            {
+              "kind": 3,
+              "file": "./src/main.ts",
+              "index": 0
+            },
+            {
+              "kind": 3,
+              "file": "./src/main.ts",
+              "index": 1
+            }
+          ]
+        },
+        {
+          "fileName": "./src/anotherFileReusingResolution.ts",
+          "originalFileName": "./src/anotherFileReusingResolution.ts",
+          "path": "./src/anotherfilereusingresolution.ts",
+          "resolvedPath": "./src/anotherfilereusingresolution.ts",
+          "version": "-18180953903-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
+          "flags": 0,
+          "imports": [
+            {
+              "kind": 10,
+              "text": "./filePresent"
+            },
+            {
+              "kind": 10,
+              "text": "./fileNotFound"
+            }
+          ],
+          "resolvedModules": {
+            "./filePresent": 0,
+            "./fileNotFound": 1
+          },
+          "includeReasons": [
+            {
+              "kind": 0,
+              "index": 0
+            }
+          ]
+        },
+        {
+          "fileName": "./src/main.ts",
+          "originalFileName": "./src/main.ts",
+          "path": "./src/main.ts",
+          "resolvedPath": "./src/main.ts",
+          "version": "-12344353894-import { something } from \"./filePresent\";\nimport { something as something1 } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();",
+          "flags": 0,
+          "imports": [
+            {
+              "kind": 10,
+              "text": "./filePresent"
+            },
+            {
+              "kind": 10,
+              "text": "./filePresent"
+            },
+            {
+              "kind": 10,
+              "text": "./fileNotFound"
+            }
+          ],
+          "resolvedModules": {
+            "./filePresent": 0,
+            "./fileNotFound": 1
+          },
+          "includeReasons": [
+            {
+              "kind": 0,
+              "index": 2
+            }
+          ]
+        }
+      ],
+      "rootFileNames": [
+        "./src/anotherFileReusingResolution.ts",
+        "./src/filePresent.ts",
+        "./src/main.ts"
+      ],
+      "resolutions": [
+        {
+          "resolvedModule": {
+            "resolvedFileName": "./src/filePresent.ts",
+            "extension": ".ts"
+          }
+        },
+        {
+          "failedLookupLocations": [
+            "./src/fileNotFound.ts",
+            "./src/fileNotFound.tsx",
+            "./src/fileNotFound.d.ts",
+            "./src/fileNotFound.js",
+            "./src/fileNotFound.jsx"
+          ]
+        }
+      ]
+    }
   },
   "version": "FakeTSVersion"
 }
@@ -404,7 +740,7 @@ Elapsed:: *ms DirectoryWatcher:: Triggered with /user/username/projects/myprojec
 FileWatcher:: Triggered with /user/username/projects/myproject/src/main.ts 1:: WatchInfo: /user/username/projects/myproject/src/main.ts 250 undefined Source file
 Scheduling update
 Elapsed:: *ms FileWatcher:: Triggered with /user/username/projects/myproject/src/main.ts 1:: WatchInfo: /user/username/projects/myproject/src/main.ts 250 undefined Source file
-[[90m12:01:03 AM[0m] File change detected. Starting incremental compilation...
+[[90m12:01:06 AM[0m] File change detected. Starting incremental compilation...
 
 Reloading new file names and options
 Synchronizing program
@@ -437,7 +773,7 @@ Elapsed:: *ms DirectoryWatcher:: Triggered with /user/username/projects/myprojec
 [7m3[0m import { something2 } from "./fileNotFound";something();
 [7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
 
-[[90m12:01:17 AM[0m] Found 2 errors. Watching for file changes.
+[[90m12:01:20 AM[0m] Found 2 errors. Watching for file changes.
 
 
 
@@ -561,7 +897,167 @@ exitCode:: ExitStatus.undefined
         ]
       ],
       "./src/newfile.ts"
-    ]
+    ],
+    "peristedProgram": {
+      "files": [
+        {
+          "fileName": "../../../../a/lib/lib.d.ts",
+          "originalFileName": "../../../../a/lib/lib.d.ts",
+          "path": "../../../../a/lib/lib.d.ts",
+          "resolvedPath": "../../../../a/lib/lib.d.ts",
+          "version": "-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }",
+          "flags": 0,
+          "hasNoDefaultLib": true,
+          "includeReasons": [
+            {
+              "kind": 6
+            }
+          ]
+        },
+        {
+          "fileName": "./src/filePresent.ts",
+          "originalFileName": "./src/filePresent.ts",
+          "path": "./src/filepresent.ts",
+          "resolvedPath": "./src/filepresent.ts",
+          "version": "11598859296-export function something() { return 10; }",
+          "flags": 0,
+          "includeReasons": [
+            {
+              "kind": 3,
+              "file": "./src/anotherfilereusingresolution.ts",
+              "index": 0
+            },
+            {
+              "kind": 0,
+              "index": 1
+            },
+            {
+              "kind": 3,
+              "file": "./src/main.ts",
+              "index": 1
+            },
+            {
+              "kind": 3,
+              "file": "./src/main.ts",
+              "index": 2
+            }
+          ]
+        },
+        {
+          "fileName": "./src/anotherFileReusingResolution.ts",
+          "originalFileName": "./src/anotherFileReusingResolution.ts",
+          "path": "./src/anotherfilereusingresolution.ts",
+          "resolvedPath": "./src/anotherfilereusingresolution.ts",
+          "version": "-18180953903-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
+          "flags": 0,
+          "imports": [
+            {
+              "kind": 10,
+              "text": "./filePresent"
+            },
+            {
+              "kind": 10,
+              "text": "./fileNotFound"
+            }
+          ],
+          "resolvedModules": {
+            "./filePresent": 0,
+            "./fileNotFound": 1
+          },
+          "includeReasons": [
+            {
+              "kind": 0,
+              "index": 0
+            }
+          ]
+        },
+        {
+          "fileName": "./src/newFile.ts",
+          "originalFileName": "./src/newFile.ts",
+          "path": "./src/newfile.ts",
+          "resolvedPath": "./src/newfile.ts",
+          "version": "4428918903-export function foo() { return 20; }",
+          "flags": 0,
+          "includeReasons": [
+            {
+              "kind": 3,
+              "file": "./src/main.ts",
+              "index": 0
+            },
+            {
+              "kind": 0,
+              "index": 3
+            }
+          ]
+        },
+        {
+          "fileName": "./src/main.ts",
+          "originalFileName": "./src/main.ts",
+          "path": "./src/main.ts",
+          "resolvedPath": "./src/main.ts",
+          "version": "28260231563-import { foo } from \"./newFile\";import { something } from \"./filePresent\";\nimport { something as something1 } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();",
+          "flags": 0,
+          "imports": [
+            {
+              "kind": 10,
+              "text": "./newFile"
+            },
+            {
+              "kind": 10,
+              "text": "./filePresent"
+            },
+            {
+              "kind": 10,
+              "text": "./filePresent"
+            },
+            {
+              "kind": 10,
+              "text": "./fileNotFound"
+            }
+          ],
+          "resolvedModules": {
+            "./newFile": 2,
+            "./filePresent": 0,
+            "./fileNotFound": 1
+          },
+          "includeReasons": [
+            {
+              "kind": 0,
+              "index": 2
+            }
+          ]
+        }
+      ],
+      "rootFileNames": [
+        "./src/anotherFileReusingResolution.ts",
+        "./src/filePresent.ts",
+        "./src/main.ts",
+        "./src/newFile.ts"
+      ],
+      "resolutions": [
+        {
+          "resolvedModule": {
+            "resolvedFileName": "./src/filePresent.ts",
+            "extension": ".ts"
+          }
+        },
+        {
+          "failedLookupLocations": [
+            "./src/fileNotFound.ts",
+            "./src/fileNotFound.tsx",
+            "./src/fileNotFound.d.ts",
+            "./src/fileNotFound.js",
+            "./src/fileNotFound.jsx"
+          ]
+        },
+        {
+          "resolvedModule": {
+            "resolvedFileName": "./src/newFile.ts",
+            "extension": ".ts"
+          }
+        }
+      ]
+    }
   },
   "version": "FakeTSVersion"
 }
@@ -592,7 +1088,7 @@ Output::
 DirectoryWatcher:: Triggered with /user/username/projects/myproject/src/fileNotFound.ts :: WatchInfo: /user/username/projects/myproject/src 1 undefined Wild card directory
 Scheduling update
 Elapsed:: *ms DirectoryWatcher:: Triggered with /user/username/projects/myproject/src/fileNotFound.ts :: WatchInfo: /user/username/projects/myproject/src 1 undefined Wild card directory
-[[90m12:01:20 AM[0m] File change detected. Starting incremental compilation...
+[[90m12:01:23 AM[0m] File change detected. Starting incremental compilation...
 
 Reloading new file names and options
 Synchronizing program
@@ -622,7 +1118,7 @@ Elapsed:: *ms DirectoryWatcher:: Triggered with /user/username/projects/myprojec
 [7m3[0m import { something2 } from "./fileNotFound";something();
 [7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
 
-[[90m12:01:28 AM[0m] Found 2 errors. Watching for file changes.
+[[90m12:01:31 AM[0m] Found 2 errors. Watching for file changes.
 
 
 
@@ -752,7 +1248,182 @@ exitCode:: ExitStatus.undefined
         ]
       ],
       "./src/newfile.ts"
-    ]
+    ],
+    "peristedProgram": {
+      "files": [
+        {
+          "fileName": "../../../../a/lib/lib.d.ts",
+          "originalFileName": "../../../../a/lib/lib.d.ts",
+          "path": "../../../../a/lib/lib.d.ts",
+          "resolvedPath": "../../../../a/lib/lib.d.ts",
+          "version": "-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }",
+          "flags": 0,
+          "hasNoDefaultLib": true,
+          "includeReasons": [
+            {
+              "kind": 6
+            }
+          ]
+        },
+        {
+          "fileName": "./src/filePresent.ts",
+          "originalFileName": "./src/filePresent.ts",
+          "path": "./src/filepresent.ts",
+          "resolvedPath": "./src/filepresent.ts",
+          "version": "11598859296-export function something() { return 10; }",
+          "flags": 0,
+          "includeReasons": [
+            {
+              "kind": 3,
+              "file": "./src/anotherfilereusingresolution.ts",
+              "index": 0
+            },
+            {
+              "kind": 0,
+              "index": 2
+            },
+            {
+              "kind": 3,
+              "file": "./src/main.ts",
+              "index": 1
+            },
+            {
+              "kind": 3,
+              "file": "./src/main.ts",
+              "index": 2
+            }
+          ]
+        },
+        {
+          "fileName": "./src/anotherFileReusingResolution.ts",
+          "originalFileName": "./src/anotherFileReusingResolution.ts",
+          "path": "./src/anotherfilereusingresolution.ts",
+          "resolvedPath": "./src/anotherfilereusingresolution.ts",
+          "version": "-18180953903-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
+          "flags": 0,
+          "imports": [
+            {
+              "kind": 10,
+              "text": "./filePresent"
+            },
+            {
+              "kind": 10,
+              "text": "./fileNotFound"
+            }
+          ],
+          "resolvedModules": {
+            "./filePresent": 0,
+            "./fileNotFound": 1
+          },
+          "includeReasons": [
+            {
+              "kind": 0,
+              "index": 0
+            }
+          ]
+        },
+        {
+          "fileName": "./src/fileNotFound.ts",
+          "originalFileName": "./src/fileNotFound.ts",
+          "path": "./src/filenotfound.ts",
+          "resolvedPath": "./src/filenotfound.ts",
+          "version": "-497034637-export function something2() { return 20; }",
+          "flags": 0,
+          "includeReasons": [
+            {
+              "kind": 0,
+              "index": 1
+            }
+          ]
+        },
+        {
+          "fileName": "./src/newFile.ts",
+          "originalFileName": "./src/newFile.ts",
+          "path": "./src/newfile.ts",
+          "resolvedPath": "./src/newfile.ts",
+          "version": "4428918903-export function foo() { return 20; }",
+          "flags": 0,
+          "includeReasons": [
+            {
+              "kind": 3,
+              "file": "./src/main.ts",
+              "index": 0
+            },
+            {
+              "kind": 0,
+              "index": 4
+            }
+          ]
+        },
+        {
+          "fileName": "./src/main.ts",
+          "originalFileName": "./src/main.ts",
+          "path": "./src/main.ts",
+          "resolvedPath": "./src/main.ts",
+          "version": "28260231563-import { foo } from \"./newFile\";import { something } from \"./filePresent\";\nimport { something as something1 } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();",
+          "flags": 0,
+          "imports": [
+            {
+              "kind": 10,
+              "text": "./newFile"
+            },
+            {
+              "kind": 10,
+              "text": "./filePresent"
+            },
+            {
+              "kind": 10,
+              "text": "./filePresent"
+            },
+            {
+              "kind": 10,
+              "text": "./fileNotFound"
+            }
+          ],
+          "resolvedModules": {
+            "./newFile": 2,
+            "./filePresent": 0,
+            "./fileNotFound": 1
+          },
+          "includeReasons": [
+            {
+              "kind": 0,
+              "index": 3
+            }
+          ]
+        }
+      ],
+      "rootFileNames": [
+        "./src/anotherFileReusingResolution.ts",
+        "./src/fileNotFound.ts",
+        "./src/filePresent.ts",
+        "./src/main.ts",
+        "./src/newFile.ts"
+      ],
+      "resolutions": [
+        {
+          "resolvedModule": {
+            "resolvedFileName": "./src/filePresent.ts",
+            "extension": ".ts"
+          }
+        },
+        {
+          "failedLookupLocations": [
+            "./src/fileNotFound.ts",
+            "./src/fileNotFound.tsx",
+            "./src/fileNotFound.d.ts",
+            "./src/fileNotFound.js",
+            "./src/fileNotFound.jsx"
+          ]
+        },
+        {
+          "resolvedModule": {
+            "resolvedFileName": "./src/newFile.ts",
+            "extension": ".ts"
+          }
+        }
+      ]
+    }
   },
   "version": "FakeTSVersion"
 }

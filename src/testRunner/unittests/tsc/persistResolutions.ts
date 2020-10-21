@@ -46,9 +46,19 @@ namespace ts {
                     subScenario: "Write file that could not be resolved",
                     buildKind: BuildKind.IncrementalDtsChange,
                     modifyFs: fs => fs.writeFileSync(`/src/project/src/fileNotFound.ts`, "export function something2() { return 20; }"),
+                    // when doing clean build, fileNotFound.ts would be resolved so the output order in outFile.js would change
+                    cleanBuildDiscrepancies: () => new Map([
+                        [`/src/project/tsconfig.tsbuildinfo`, CleanBuildDescrepancy.CleanFileTextDifferent]
+                    ]),
                 },
                 {
                     subScenario: "Clean resolutions",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: noop,
+                    commandLineArgs: ["--p", "src/project", "--cleanPersistedProgram"]
+                },
+                {
+                    subScenario: "Clean resolutions again",
                     buildKind: BuildKind.IncrementalDtsChange,
                     modifyFs: noop,
                     commandLineArgs: ["--p", "src/project", "--cleanPersistedProgram"]
@@ -87,9 +97,22 @@ namespace ts {
                     subScenario: "Write file that could not be resolved",
                     buildKind: BuildKind.IncrementalDtsChange,
                     modifyFs: fs => fs.writeFileSync(`/src/project/src/fileNotFound.ts`, "export function something2() { return 20; }"),
+                    // when doing clean build, fileNotFound.ts would be resolved so the output order in outFile.js would change
+                    cleanBuildDiscrepancies: () => new Map([
+                        ["/src/project/outFile.tsbuildinfo", CleanBuildDescrepancy.CleanFileTextDifferent],
+                        ["/src/project/outFile.js", CleanBuildDescrepancy.CleanFileTextDifferent],
+                        ["/src/project/outFile.d.ts", CleanBuildDescrepancy.CleanFileTextDifferent],
+                        ["/src/project/outFile.tsbuildinfo.baseline.txt", CleanBuildDescrepancy.CleanFileTextDifferent]
+                    ]),
                 },
                 {
                     subScenario: "Clean resolutions",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: noop,
+                    commandLineArgs: ["--p", "src/project", "--cleanPersistedProgram"]
+                },
+                {
+                    subScenario: "Clean resolutions again",
                     buildKind: BuildKind.IncrementalDtsChange,
                     modifyFs: noop,
                     commandLineArgs: ["--p", "src/project", "--cleanPersistedProgram"]
