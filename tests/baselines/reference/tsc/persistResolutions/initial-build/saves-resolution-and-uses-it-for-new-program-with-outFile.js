@@ -14,11 +14,16 @@ interface Array<T> { length: number; [n: number]: T; }
 interface ReadonlyArray<T> {}
 declare const console: { log(msg: any): void; };
 
+//// [/src/project/src/anotherFileReusingResolution.ts]
+import { something } from "./filePresent";
+import { something2 } from "./fileNotFound";
+
 //// [/src/project/src/filePresent.ts]
 export function something() { return 10; }
 
 //// [/src/project/src/main.ts]
 import { something } from "./filePresent";
+import { something as something1 } from "./filePresent";
 import { something2 } from "./fileNotFound";
 
 //// [/src/project/tsconfig.json]
@@ -28,11 +33,11 @@ import { something2 } from "./fileNotFound";
 
 Output::
 /lib/tsc --p src/project
-======== Resolving module './filePresent' from '/src/project/src/main.ts'. ========
+======== Resolving module './filePresent' from '/src/project/src/anotherFileReusingResolution.ts'. ========
 Module resolution kind is not specified, using 'Classic'.
 File '/src/project/src/filePresent.ts' exist - use it as a name resolution result.
 ======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
-======== Resolving module './fileNotFound' from '/src/project/src/main.ts'. ========
+======== Resolving module './fileNotFound' from '/src/project/src/anotherFileReusingResolution.ts'. ========
 Module resolution kind is not specified, using 'Classic'.
 File '/src/project/src/fileNotFound.ts' does not exist.
 File '/src/project/src/fileNotFound.tsx' does not exist.
@@ -40,21 +45,33 @@ File '/src/project/src/fileNotFound.d.ts' does not exist.
 File '/src/project/src/fileNotFound.js' does not exist.
 File '/src/project/src/fileNotFound.jsx' does not exist.
 ======== Module name './fileNotFound' was not resolved. ========
-[96msrc/project/src/main.ts[0m:[93m2[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+======== Resolving module './filePresent' from '/src/project/src/main.ts'. ========
+Resolution for module './filePresent' was found in cache from location '/src/project/src'.
+======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
+======== Resolving module './fileNotFound' from '/src/project/src/main.ts'. ========
+Resolution for module './fileNotFound' was found in cache from location '/src/project/src'.
+======== Module name './fileNotFound' was not resolved. ========
+[96msrc/project/src/anotherFileReusingResolution.ts[0m:[93m2[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
 
 [7m2[0m import { something2 } from "./fileNotFound";
 [7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
 
+[96msrc/project/src/main.ts[0m:[93m3[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
 
-Found 1 error.
+[7m3[0m import { something2 } from "./fileNotFound";
+[7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
+
+
+Found 2 errors.
 
 exitCode:: ExitStatus.DiagnosticsPresent_OutputsGenerated
-Program root files: ["/src/project/src/filePresent.ts","/src/project/src/main.ts"]
+Program root files: ["/src/project/src/anotherFileReusingResolution.ts","/src/project/src/filePresent.ts","/src/project/src/main.ts"]
 Program options: {"module":2,"composite":true,"persistResolutions":true,"traceResolution":true,"outFile":"/src/project/outFile.js","project":"/src/project","configFilePath":"/src/project/tsconfig.json"}
 Program structureReused: Not
 Program files::
 /lib/lib.d.ts
 /src/project/src/filePresent.ts
+/src/project/src/anotherFileReusingResolution.ts
 /src/project/src/main.ts
 
 No cached semantic diagnostics in the builder::
@@ -64,6 +81,7 @@ No cached semantic diagnostics in the builder::
 declare module "src/filePresent" {
     export function something(): number;
 }
+declare module "src/anotherFileReusingResolution" { }
 declare module "src/main" { }
 
 
@@ -74,6 +92,10 @@ define("src/filePresent", ["require", "exports"], function (require, exports) {
     exports.something = void 0;
     function something() { return 10; }
     exports.something = something;
+});
+define("src/anotherFileReusingResolution", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
 });
 define("src/main", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -87,13 +109,14 @@ define("src/main", ["require", "exports"], function (require, exports) {
     "commonSourceDirectory": "./",
     "sourceFiles": [
       "./src/filePresent.ts",
+      "./src/anotherFileReusingResolution.ts",
       "./src/main.ts"
     ],
     "js": {
       "sections": [
         {
           "pos": 0,
-          "end": 377,
+          "end": 531,
           "kind": "text"
         }
       ]
@@ -102,7 +125,7 @@ define("src/main", ["require", "exports"], function (require, exports) {
       "sections": [
         {
           "pos": 0,
-          "end": 112,
+          "end": 167,
           "kind": "text"
         }
       ]
@@ -118,8 +141,12 @@ define("src/main", ["require", "exports"], function (require, exports) {
         "version": "11598859296-export function something() { return 10; }",
         "affectsGlobalScope": false
       },
-      "./src/main.ts": {
+      "./src/anotherfilereusingresolution.ts": {
         "version": "-18180953903-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
+        "affectsGlobalScope": false
+      },
+      "./src/main.ts": {
+        "version": "-9387417376-import { something } from \"./filePresent\";\nimport { something as something1 } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
         "affectsGlobalScope": false
       }
     },
@@ -133,6 +160,9 @@ define("src/main", ["require", "exports"], function (require, exports) {
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
+      "./src/anotherfilereusingresolution.ts": [
+        "./src/filepresent.ts"
+      ],
       "./src/main.ts": [
         "./src/filepresent.ts"
       ]
@@ -146,13 +176,17 @@ define("src/main", ["require", "exports"], function (require, exports) {
 ======================================================================
 File:: /src/project/outFile.js
 ----------------------------------------------------------------------
-text: (0-377)
+text: (0-531)
 define("src/filePresent", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
     exports.something = void 0;
     function something() { return 10; }
     exports.something = something;
+});
+define("src/anotherFileReusingResolution", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
 });
 define("src/main", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -163,10 +197,11 @@ define("src/main", ["require", "exports"], function (require, exports) {
 ======================================================================
 File:: /src/project/outFile.d.ts
 ----------------------------------------------------------------------
-text: (0-112)
+text: (0-167)
 declare module "src/filePresent" {
     export function something(): number;
 }
+declare module "src/anotherFileReusingResolution" { }
 declare module "src/main" { }
 
 ======================================================================
@@ -179,11 +214,11 @@ Input::
 
 Output::
 /lib/tsc --p src/project
-======== Resolving module './filePresent' from '/src/project/src/main.ts'. ========
+======== Resolving module './filePresent' from '/src/project/src/anotherFileReusingResolution.ts'. ========
 Module resolution kind is not specified, using 'Classic'.
 File '/src/project/src/filePresent.ts' exist - use it as a name resolution result.
 ======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
-======== Resolving module './fileNotFound' from '/src/project/src/main.ts'. ========
+======== Resolving module './fileNotFound' from '/src/project/src/anotherFileReusingResolution.ts'. ========
 Module resolution kind is not specified, using 'Classic'.
 File '/src/project/src/fileNotFound.ts' does not exist.
 File '/src/project/src/fileNotFound.tsx' does not exist.
@@ -191,21 +226,33 @@ File '/src/project/src/fileNotFound.d.ts' does not exist.
 File '/src/project/src/fileNotFound.js' does not exist.
 File '/src/project/src/fileNotFound.jsx' does not exist.
 ======== Module name './fileNotFound' was not resolved. ========
-[96msrc/project/src/main.ts[0m:[93m2[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+======== Resolving module './filePresent' from '/src/project/src/main.ts'. ========
+Resolution for module './filePresent' was found in cache from location '/src/project/src'.
+======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
+======== Resolving module './fileNotFound' from '/src/project/src/main.ts'. ========
+Resolution for module './fileNotFound' was found in cache from location '/src/project/src'.
+======== Module name './fileNotFound' was not resolved. ========
+[96msrc/project/src/anotherFileReusingResolution.ts[0m:[93m2[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
 
 [7m2[0m import { something2 } from "./fileNotFound";
 [7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
 
+[96msrc/project/src/main.ts[0m:[93m3[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
 
-Found 1 error.
+[7m3[0m import { something2 } from "./fileNotFound";
+[7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
+
+
+Found 2 errors.
 
 exitCode:: ExitStatus.DiagnosticsPresent_OutputsGenerated
-Program root files: ["/src/project/src/filePresent.ts","/src/project/src/main.ts"]
+Program root files: ["/src/project/src/anotherFileReusingResolution.ts","/src/project/src/filePresent.ts","/src/project/src/main.ts"]
 Program options: {"module":2,"composite":true,"persistResolutions":true,"traceResolution":true,"outFile":"/src/project/outFile.js","project":"/src/project","configFilePath":"/src/project/tsconfig.json"}
 Program structureReused: Not
 Program files::
 /lib/lib.d.ts
 /src/project/src/filePresent.ts
+/src/project/src/anotherFileReusingResolution.ts
 /src/project/src/main.ts
 
 No cached semantic diagnostics in the builder::
@@ -221,17 +268,18 @@ Change:: Modify main file
 Input::
 //// [/src/project/src/main.ts]
 import { something } from "./filePresent";
+import { something as something1 } from "./filePresent";
 import { something2 } from "./fileNotFound";something();
 
 
 
 Output::
 /lib/tsc --p src/project
-======== Resolving module './filePresent' from '/src/project/src/main.ts'. ========
+======== Resolving module './filePresent' from '/src/project/src/anotherFileReusingResolution.ts'. ========
 Module resolution kind is not specified, using 'Classic'.
 File '/src/project/src/filePresent.ts' exist - use it as a name resolution result.
 ======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
-======== Resolving module './fileNotFound' from '/src/project/src/main.ts'. ========
+======== Resolving module './fileNotFound' from '/src/project/src/anotherFileReusingResolution.ts'. ========
 Module resolution kind is not specified, using 'Classic'.
 File '/src/project/src/fileNotFound.ts' does not exist.
 File '/src/project/src/fileNotFound.tsx' does not exist.
@@ -239,21 +287,33 @@ File '/src/project/src/fileNotFound.d.ts' does not exist.
 File '/src/project/src/fileNotFound.js' does not exist.
 File '/src/project/src/fileNotFound.jsx' does not exist.
 ======== Module name './fileNotFound' was not resolved. ========
-[96msrc/project/src/main.ts[0m:[93m2[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+======== Resolving module './filePresent' from '/src/project/src/main.ts'. ========
+Resolution for module './filePresent' was found in cache from location '/src/project/src'.
+======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
+======== Resolving module './fileNotFound' from '/src/project/src/main.ts'. ========
+Resolution for module './fileNotFound' was found in cache from location '/src/project/src'.
+======== Module name './fileNotFound' was not resolved. ========
+[96msrc/project/src/anotherFileReusingResolution.ts[0m:[93m2[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
 
-[7m2[0m import { something2 } from "./fileNotFound";something();
+[7m2[0m import { something2 } from "./fileNotFound";
+[7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
+
+[96msrc/project/src/main.ts[0m:[93m3[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+
+[7m3[0m import { something2 } from "./fileNotFound";something();
 [7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
 
 
-Found 1 error.
+Found 2 errors.
 
 exitCode:: ExitStatus.DiagnosticsPresent_OutputsGenerated
-Program root files: ["/src/project/src/filePresent.ts","/src/project/src/main.ts"]
+Program root files: ["/src/project/src/anotherFileReusingResolution.ts","/src/project/src/filePresent.ts","/src/project/src/main.ts"]
 Program options: {"module":2,"composite":true,"persistResolutions":true,"traceResolution":true,"outFile":"/src/project/outFile.js","project":"/src/project","configFilePath":"/src/project/tsconfig.json"}
 Program structureReused: Not
 Program files::
 /lib/lib.d.ts
 /src/project/src/filePresent.ts
+/src/project/src/anotherFileReusingResolution.ts
 /src/project/src/main.ts
 
 No cached semantic diagnostics in the builder::
@@ -268,6 +328,10 @@ define("src/filePresent", ["require", "exports"], function (require, exports) {
     function something() { return 10; }
     exports.something = something;
 });
+define("src/anotherFileReusingResolution", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
+});
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
@@ -281,13 +345,14 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
     "commonSourceDirectory": "./",
     "sourceFiles": [
       "./src/filePresent.ts",
+      "./src/anotherFileReusingResolution.ts",
       "./src/main.ts"
     ],
     "js": {
       "sections": [
         {
           "pos": 0,
-          "end": 443,
+          "end": 597,
           "kind": "text"
         }
       ]
@@ -296,7 +361,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 112,
+          "end": 167,
           "kind": "text"
         }
       ]
@@ -312,8 +377,12 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
         "version": "11598859296-export function something() { return 10; }",
         "affectsGlobalScope": false
       },
+      "./src/anotherfilereusingresolution.ts": {
+        "version": "-18180953903-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
+        "affectsGlobalScope": false
+      },
       "./src/main.ts": {
-        "version": "-22084070133-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();",
+        "version": "-12344353894-import { something } from \"./filePresent\";\nimport { something as something1 } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();",
         "affectsGlobalScope": false
       }
     },
@@ -327,6 +396,9 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
+      "./src/anotherfilereusingresolution.ts": [
+        "./src/filepresent.ts"
+      ],
       "./src/main.ts": [
         "./src/filepresent.ts"
       ]
@@ -340,13 +412,17 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.js
 ----------------------------------------------------------------------
-text: (0-443)
+text: (0-597)
 define("src/filePresent", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
     exports.something = void 0;
     function something() { return 10; }
     exports.something = something;
+});
+define("src/anotherFileReusingResolution", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
 });
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
@@ -358,10 +434,11 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.d.ts
 ----------------------------------------------------------------------
-text: (0-112)
+text: (0-167)
 declare module "src/filePresent" {
     export function something(): number;
 }
+declare module "src/anotherFileReusingResolution" { }
 declare module "src/main" { }
 
 ======================================================================
@@ -372,6 +449,7 @@ Change:: Add new module and update main file
 Input::
 //// [/src/project/src/main.ts]
 import { foo } from "./newFile";import { something } from "./filePresent";
+import { something as something1 } from "./filePresent";
 import { something2 } from "./fileNotFound";something();
 
 //// [/src/project/src/newFile.ts]
@@ -381,15 +459,11 @@ export function foo() { return 20; }
 
 Output::
 /lib/tsc --p src/project
-======== Resolving module './newFile' from '/src/project/src/main.ts'. ========
-Module resolution kind is not specified, using 'Classic'.
-File '/src/project/src/newFile.ts' exist - use it as a name resolution result.
-======== Module name './newFile' was successfully resolved to '/src/project/src/newFile.ts'. ========
-======== Resolving module './filePresent' from '/src/project/src/main.ts'. ========
+======== Resolving module './filePresent' from '/src/project/src/anotherFileReusingResolution.ts'. ========
 Module resolution kind is not specified, using 'Classic'.
 File '/src/project/src/filePresent.ts' exist - use it as a name resolution result.
 ======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
-======== Resolving module './fileNotFound' from '/src/project/src/main.ts'. ========
+======== Resolving module './fileNotFound' from '/src/project/src/anotherFileReusingResolution.ts'. ========
 Module resolution kind is not specified, using 'Classic'.
 File '/src/project/src/fileNotFound.ts' does not exist.
 File '/src/project/src/fileNotFound.tsx' does not exist.
@@ -397,21 +471,37 @@ File '/src/project/src/fileNotFound.d.ts' does not exist.
 File '/src/project/src/fileNotFound.js' does not exist.
 File '/src/project/src/fileNotFound.jsx' does not exist.
 ======== Module name './fileNotFound' was not resolved. ========
-[96msrc/project/src/main.ts[0m:[93m2[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+======== Resolving module './newFile' from '/src/project/src/main.ts'. ========
+Module resolution kind is not specified, using 'Classic'.
+File '/src/project/src/newFile.ts' exist - use it as a name resolution result.
+======== Module name './newFile' was successfully resolved to '/src/project/src/newFile.ts'. ========
+======== Resolving module './filePresent' from '/src/project/src/main.ts'. ========
+Resolution for module './filePresent' was found in cache from location '/src/project/src'.
+======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
+======== Resolving module './fileNotFound' from '/src/project/src/main.ts'. ========
+Resolution for module './fileNotFound' was found in cache from location '/src/project/src'.
+======== Module name './fileNotFound' was not resolved. ========
+[96msrc/project/src/anotherFileReusingResolution.ts[0m:[93m2[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
 
-[7m2[0m import { something2 } from "./fileNotFound";something();
+[7m2[0m import { something2 } from "./fileNotFound";
+[7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
+
+[96msrc/project/src/main.ts[0m:[93m3[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module './fileNotFound'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+
+[7m3[0m import { something2 } from "./fileNotFound";something();
 [7m [0m [91m                           ~~~~~~~~~~~~~~~~[0m
 
 
-Found 1 error.
+Found 2 errors.
 
 exitCode:: ExitStatus.DiagnosticsPresent_OutputsGenerated
-Program root files: ["/src/project/src/filePresent.ts","/src/project/src/main.ts","/src/project/src/newFile.ts"]
+Program root files: ["/src/project/src/anotherFileReusingResolution.ts","/src/project/src/filePresent.ts","/src/project/src/main.ts","/src/project/src/newFile.ts"]
 Program options: {"module":2,"composite":true,"persistResolutions":true,"traceResolution":true,"outFile":"/src/project/outFile.js","project":"/src/project","configFilePath":"/src/project/tsconfig.json"}
 Program structureReused: Not
 Program files::
 /lib/lib.d.ts
 /src/project/src/filePresent.ts
+/src/project/src/anotherFileReusingResolution.ts
 /src/project/src/newFile.ts
 /src/project/src/main.ts
 
@@ -422,6 +512,7 @@ No cached semantic diagnostics in the builder::
 declare module "src/filePresent" {
     export function something(): number;
 }
+declare module "src/anotherFileReusingResolution" { }
 declare module "src/newFile" {
     export function foo(): number;
 }
@@ -436,6 +527,10 @@ define("src/filePresent", ["require", "exports"], function (require, exports) {
     function something() { return 10; }
     exports.something = something;
 });
+define("src/anotherFileReusingResolution", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
+});
 define("src/newFile", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
@@ -456,6 +551,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
     "commonSourceDirectory": "./",
     "sourceFiles": [
       "./src/filePresent.ts",
+      "./src/anotherFileReusingResolution.ts",
       "./src/newFile.ts",
       "./src/main.ts"
     ],
@@ -463,7 +559,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 662,
+          "end": 816,
           "kind": "text"
         }
       ]
@@ -472,7 +568,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 183,
+          "end": 238,
           "kind": "text"
         }
       ]
@@ -488,12 +584,16 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
         "version": "11598859296-export function something() { return 10; }",
         "affectsGlobalScope": false
       },
+      "./src/anotherfilereusingresolution.ts": {
+        "version": "-18180953903-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
+        "affectsGlobalScope": false
+      },
       "./src/newfile.ts": {
         "version": "4428918903-export function foo() { return 20; }",
         "affectsGlobalScope": false
       },
       "./src/main.ts": {
-        "version": "-1814339108-import { foo } from \"./newFile\";import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();",
+        "version": "28260231563-import { foo } from \"./newFile\";import { something } from \"./filePresent\";\nimport { something as something1 } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();",
         "affectsGlobalScope": false
       }
     },
@@ -507,6 +607,9 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
+      "./src/anotherfilereusingresolution.ts": [
+        "./src/filepresent.ts"
+      ],
       "./src/main.ts": [
         "./src/filepresent.ts",
         "./src/newfile.ts"
@@ -521,13 +624,17 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.js
 ----------------------------------------------------------------------
-text: (0-662)
+text: (0-816)
 define("src/filePresent", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
     exports.something = void 0;
     function something() { return 10; }
     exports.something = something;
+});
+define("src/anotherFileReusingResolution", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
 });
 define("src/newFile", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -546,10 +653,11 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.d.ts
 ----------------------------------------------------------------------
-text: (0-183)
+text: (0-238)
 declare module "src/filePresent" {
     export function something(): number;
 }
+declare module "src/anotherFileReusingResolution" { }
 declare module "src/newFile" {
     export function foo(): number;
 }
@@ -568,26 +676,33 @@ export function something2() { return 20; }
 
 Output::
 /lib/tsc --p src/project
+======== Resolving module './filePresent' from '/src/project/src/anotherFileReusingResolution.ts'. ========
+Module resolution kind is not specified, using 'Classic'.
+File '/src/project/src/filePresent.ts' exist - use it as a name resolution result.
+======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
+======== Resolving module './fileNotFound' from '/src/project/src/anotherFileReusingResolution.ts'. ========
+Module resolution kind is not specified, using 'Classic'.
+File '/src/project/src/fileNotFound.ts' exist - use it as a name resolution result.
+======== Module name './fileNotFound' was successfully resolved to '/src/project/src/fileNotFound.ts'. ========
 ======== Resolving module './newFile' from '/src/project/src/main.ts'. ========
 Module resolution kind is not specified, using 'Classic'.
 File '/src/project/src/newFile.ts' exist - use it as a name resolution result.
 ======== Module name './newFile' was successfully resolved to '/src/project/src/newFile.ts'. ========
 ======== Resolving module './filePresent' from '/src/project/src/main.ts'. ========
-Module resolution kind is not specified, using 'Classic'.
-File '/src/project/src/filePresent.ts' exist - use it as a name resolution result.
+Resolution for module './filePresent' was found in cache from location '/src/project/src'.
 ======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
 ======== Resolving module './fileNotFound' from '/src/project/src/main.ts'. ========
-Module resolution kind is not specified, using 'Classic'.
-File '/src/project/src/fileNotFound.ts' exist - use it as a name resolution result.
+Resolution for module './fileNotFound' was found in cache from location '/src/project/src'.
 ======== Module name './fileNotFound' was successfully resolved to '/src/project/src/fileNotFound.ts'. ========
 exitCode:: ExitStatus.Success
-Program root files: ["/src/project/src/fileNotFound.ts","/src/project/src/filePresent.ts","/src/project/src/main.ts","/src/project/src/newFile.ts"]
+Program root files: ["/src/project/src/anotherFileReusingResolution.ts","/src/project/src/fileNotFound.ts","/src/project/src/filePresent.ts","/src/project/src/main.ts","/src/project/src/newFile.ts"]
 Program options: {"module":2,"composite":true,"persistResolutions":true,"traceResolution":true,"outFile":"/src/project/outFile.js","project":"/src/project","configFilePath":"/src/project/tsconfig.json"}
 Program structureReused: Not
 Program files::
 /lib/lib.d.ts
-/src/project/src/fileNotFound.ts
 /src/project/src/filePresent.ts
+/src/project/src/fileNotFound.ts
+/src/project/src/anotherFileReusingResolution.ts
 /src/project/src/newFile.ts
 /src/project/src/main.ts
 
@@ -595,12 +710,13 @@ No cached semantic diagnostics in the builder::
 
 
 //// [/src/project/outFile.d.ts]
-declare module "src/fileNotFound" {
-    export function something2(): number;
-}
 declare module "src/filePresent" {
     export function something(): number;
 }
+declare module "src/fileNotFound" {
+    export function something2(): number;
+}
+declare module "src/anotherFileReusingResolution" { }
 declare module "src/newFile" {
     export function foo(): number;
 }
@@ -608,6 +724,13 @@ declare module "src/main" { }
 
 
 //// [/src/project/outFile.js]
+define("src/filePresent", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
+    exports.something = void 0;
+    function something() { return 10; }
+    exports.something = something;
+});
 define("src/fileNotFound", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
@@ -615,12 +738,9 @@ define("src/fileNotFound", ["require", "exports"], function (require, exports) {
     function something2() { return 20; }
     exports.something2 = something2;
 });
-define("src/filePresent", ["require", "exports"], function (require, exports) {
+define("src/anotherFileReusingResolution", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
-    exports.something = void 0;
-    function something() { return 10; }
-    exports.something = something;
 });
 define("src/newFile", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -641,8 +761,9 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
   "bundle": {
     "commonSourceDirectory": "./",
     "sourceFiles": [
-      "./src/fileNotFound.ts",
       "./src/filePresent.ts",
+      "./src/fileNotFound.ts",
+      "./src/anotherFileReusingResolution.ts",
       "./src/newFile.ts",
       "./src/main.ts"
     ],
@@ -650,7 +771,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 914,
+          "end": 1068,
           "kind": "text"
         }
       ]
@@ -659,7 +780,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 266,
+          "end": 321,
           "kind": "text"
         }
       ]
@@ -671,12 +792,16 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
         "version": "3858781397-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ndeclare const console: { log(msg: any): void; };",
         "affectsGlobalScope": true
       },
+      "./src/filepresent.ts": {
+        "version": "11598859296-export function something() { return 10; }",
+        "affectsGlobalScope": false
+      },
       "./src/filenotfound.ts": {
         "version": "-497034637-export function something2() { return 20; }",
         "affectsGlobalScope": false
       },
-      "./src/filepresent.ts": {
-        "version": "11598859296-export function something() { return 10; }",
+      "./src/anotherfilereusingresolution.ts": {
+        "version": "-18180953903-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
         "affectsGlobalScope": false
       },
       "./src/newfile.ts": {
@@ -684,7 +809,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
         "affectsGlobalScope": false
       },
       "./src/main.ts": {
-        "version": "-1814339108-import { foo } from \"./newFile\";import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();",
+        "version": "28260231563-import { foo } from \"./newFile\";import { something } from \"./filePresent\";\nimport { something as something1 } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();",
         "affectsGlobalScope": false
       }
     },
@@ -698,6 +823,10 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
+      "./src/anotherfilereusingresolution.ts": [
+        "./src/filenotfound.ts",
+        "./src/filepresent.ts"
+      ],
       "./src/main.ts": [
         "./src/filenotfound.ts",
         "./src/filepresent.ts",
@@ -713,7 +842,14 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.js
 ----------------------------------------------------------------------
-text: (0-914)
+text: (0-1068)
+define("src/filePresent", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
+    exports.something = void 0;
+    function something() { return 10; }
+    exports.something = something;
+});
 define("src/fileNotFound", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
@@ -721,12 +857,9 @@ define("src/fileNotFound", ["require", "exports"], function (require, exports) {
     function something2() { return 20; }
     exports.something2 = something2;
 });
-define("src/filePresent", ["require", "exports"], function (require, exports) {
+define("src/anotherFileReusingResolution", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
-    exports.something = void 0;
-    function something() { return 10; }
-    exports.something = something;
 });
 define("src/newFile", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -745,13 +878,14 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.d.ts
 ----------------------------------------------------------------------
-text: (0-266)
-declare module "src/fileNotFound" {
-    export function something2(): number;
-}
+text: (0-321)
 declare module "src/filePresent" {
     export function something(): number;
 }
+declare module "src/fileNotFound" {
+    export function something2(): number;
+}
+declare module "src/anotherFileReusingResolution" { }
 declare module "src/newFile" {
     export function foo(): number;
 }
@@ -779,26 +913,33 @@ Input::
 
 Output::
 /lib/tsc --p src/project
+======== Resolving module './filePresent' from '/src/project/src/anotherFileReusingResolution.ts'. ========
+Module resolution kind is not specified, using 'Classic'.
+File '/src/project/src/filePresent.ts' exist - use it as a name resolution result.
+======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
+======== Resolving module './fileNotFound' from '/src/project/src/anotherFileReusingResolution.ts'. ========
+Module resolution kind is not specified, using 'Classic'.
+File '/src/project/src/fileNotFound.ts' exist - use it as a name resolution result.
+======== Module name './fileNotFound' was successfully resolved to '/src/project/src/fileNotFound.ts'. ========
 ======== Resolving module './newFile' from '/src/project/src/main.ts'. ========
 Module resolution kind is not specified, using 'Classic'.
 File '/src/project/src/newFile.ts' exist - use it as a name resolution result.
 ======== Module name './newFile' was successfully resolved to '/src/project/src/newFile.ts'. ========
 ======== Resolving module './filePresent' from '/src/project/src/main.ts'. ========
-Module resolution kind is not specified, using 'Classic'.
-File '/src/project/src/filePresent.ts' exist - use it as a name resolution result.
+Resolution for module './filePresent' was found in cache from location '/src/project/src'.
 ======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
 ======== Resolving module './fileNotFound' from '/src/project/src/main.ts'. ========
-Module resolution kind is not specified, using 'Classic'.
-File '/src/project/src/fileNotFound.ts' exist - use it as a name resolution result.
+Resolution for module './fileNotFound' was found in cache from location '/src/project/src'.
 ======== Module name './fileNotFound' was successfully resolved to '/src/project/src/fileNotFound.ts'. ========
 exitCode:: ExitStatus.Success
-Program root files: ["/src/project/src/fileNotFound.ts","/src/project/src/filePresent.ts","/src/project/src/main.ts","/src/project/src/newFile.ts"]
+Program root files: ["/src/project/src/anotherFileReusingResolution.ts","/src/project/src/fileNotFound.ts","/src/project/src/filePresent.ts","/src/project/src/main.ts","/src/project/src/newFile.ts"]
 Program options: {"module":2,"composite":true,"persistResolutions":true,"traceResolution":true,"outFile":"/src/project/outFile.js","project":"/src/project","configFilePath":"/src/project/tsconfig.json"}
 Program structureReused: Not
 Program files::
 /lib/lib.d.ts
-/src/project/src/fileNotFound.ts
 /src/project/src/filePresent.ts
+/src/project/src/fileNotFound.ts
+/src/project/src/anotherFileReusingResolution.ts
 /src/project/src/newFile.ts
 /src/project/src/main.ts
 
@@ -815,32 +956,40 @@ Change:: Modify main file
 Input::
 //// [/src/project/src/main.ts]
 import { foo } from "./newFile";import { something } from "./filePresent";
+import { something as something1 } from "./filePresent";
 import { something2 } from "./fileNotFound";something();something();
 
 
 
 Output::
 /lib/tsc --p src/project
+======== Resolving module './filePresent' from '/src/project/src/anotherFileReusingResolution.ts'. ========
+Module resolution kind is not specified, using 'Classic'.
+File '/src/project/src/filePresent.ts' exist - use it as a name resolution result.
+======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
+======== Resolving module './fileNotFound' from '/src/project/src/anotherFileReusingResolution.ts'. ========
+Module resolution kind is not specified, using 'Classic'.
+File '/src/project/src/fileNotFound.ts' exist - use it as a name resolution result.
+======== Module name './fileNotFound' was successfully resolved to '/src/project/src/fileNotFound.ts'. ========
 ======== Resolving module './newFile' from '/src/project/src/main.ts'. ========
 Module resolution kind is not specified, using 'Classic'.
 File '/src/project/src/newFile.ts' exist - use it as a name resolution result.
 ======== Module name './newFile' was successfully resolved to '/src/project/src/newFile.ts'. ========
 ======== Resolving module './filePresent' from '/src/project/src/main.ts'. ========
-Module resolution kind is not specified, using 'Classic'.
-File '/src/project/src/filePresent.ts' exist - use it as a name resolution result.
+Resolution for module './filePresent' was found in cache from location '/src/project/src'.
 ======== Module name './filePresent' was successfully resolved to '/src/project/src/filePresent.ts'. ========
 ======== Resolving module './fileNotFound' from '/src/project/src/main.ts'. ========
-Module resolution kind is not specified, using 'Classic'.
-File '/src/project/src/fileNotFound.ts' exist - use it as a name resolution result.
+Resolution for module './fileNotFound' was found in cache from location '/src/project/src'.
 ======== Module name './fileNotFound' was successfully resolved to '/src/project/src/fileNotFound.ts'. ========
 exitCode:: ExitStatus.Success
-Program root files: ["/src/project/src/fileNotFound.ts","/src/project/src/filePresent.ts","/src/project/src/main.ts","/src/project/src/newFile.ts"]
+Program root files: ["/src/project/src/anotherFileReusingResolution.ts","/src/project/src/fileNotFound.ts","/src/project/src/filePresent.ts","/src/project/src/main.ts","/src/project/src/newFile.ts"]
 Program options: {"module":2,"composite":true,"persistResolutions":true,"traceResolution":true,"outFile":"/src/project/outFile.js","project":"/src/project","configFilePath":"/src/project/tsconfig.json"}
 Program structureReused: Not
 Program files::
 /lib/lib.d.ts
-/src/project/src/fileNotFound.ts
 /src/project/src/filePresent.ts
+/src/project/src/fileNotFound.ts
+/src/project/src/anotherFileReusingResolution.ts
 /src/project/src/newFile.ts
 /src/project/src/main.ts
 
@@ -849,6 +998,13 @@ No cached semantic diagnostics in the builder::
 
 //// [/src/project/outFile.d.ts] file written with same contents
 //// [/src/project/outFile.js]
+define("src/filePresent", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
+    exports.something = void 0;
+    function something() { return 10; }
+    exports.something = something;
+});
 define("src/fileNotFound", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
@@ -856,12 +1012,9 @@ define("src/fileNotFound", ["require", "exports"], function (require, exports) {
     function something2() { return 20; }
     exports.something2 = something2;
 });
-define("src/filePresent", ["require", "exports"], function (require, exports) {
+define("src/anotherFileReusingResolution", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
-    exports.something = void 0;
-    function something() { return 10; }
-    exports.something = something;
 });
 define("src/newFile", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -883,8 +1036,9 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
   "bundle": {
     "commonSourceDirectory": "./",
     "sourceFiles": [
-      "./src/fileNotFound.ts",
       "./src/filePresent.ts",
+      "./src/fileNotFound.ts",
+      "./src/anotherFileReusingResolution.ts",
       "./src/newFile.ts",
       "./src/main.ts"
     ],
@@ -892,7 +1046,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 946,
+          "end": 1100,
           "kind": "text"
         }
       ]
@@ -901,7 +1055,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 266,
+          "end": 321,
           "kind": "text"
         }
       ]
@@ -913,12 +1067,16 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
         "version": "3858781397-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ndeclare const console: { log(msg: any): void; };",
         "affectsGlobalScope": true
       },
+      "./src/filepresent.ts": {
+        "version": "11598859296-export function something() { return 10; }",
+        "affectsGlobalScope": false
+      },
       "./src/filenotfound.ts": {
         "version": "-497034637-export function something2() { return 20; }",
         "affectsGlobalScope": false
       },
-      "./src/filepresent.ts": {
-        "version": "11598859296-export function something() { return 10; }",
+      "./src/anotherfilereusingresolution.ts": {
+        "version": "-18180953903-import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";",
         "affectsGlobalScope": false
       },
       "./src/newfile.ts": {
@@ -926,7 +1084,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
         "affectsGlobalScope": false
       },
       "./src/main.ts": {
-        "version": "992573078-import { foo } from \"./newFile\";import { something } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();something();",
+        "version": "26360741061-import { foo } from \"./newFile\";import { something } from \"./filePresent\";\nimport { something as something1 } from \"./filePresent\";\nimport { something2 } from \"./fileNotFound\";something();something();",
         "affectsGlobalScope": false
       }
     },
@@ -940,6 +1098,10 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
+      "./src/anotherfilereusingresolution.ts": [
+        "./src/filenotfound.ts",
+        "./src/filepresent.ts"
+      ],
       "./src/main.ts": [
         "./src/filenotfound.ts",
         "./src/filepresent.ts",
@@ -955,7 +1117,14 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.js
 ----------------------------------------------------------------------
-text: (0-946)
+text: (0-1100)
+define("src/filePresent", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
+    exports.something = void 0;
+    function something() { return 10; }
+    exports.something = something;
+});
 define("src/fileNotFound", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
@@ -963,12 +1132,9 @@ define("src/fileNotFound", ["require", "exports"], function (require, exports) {
     function something2() { return 20; }
     exports.something2 = something2;
 });
-define("src/filePresent", ["require", "exports"], function (require, exports) {
+define("src/anotherFileReusingResolution", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
-    exports.something = void 0;
-    function something() { return 10; }
-    exports.something = something;
 });
 define("src/newFile", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -988,13 +1154,14 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.d.ts
 ----------------------------------------------------------------------
-text: (0-266)
-declare module "src/fileNotFound" {
-    export function something2(): number;
-}
+text: (0-321)
 declare module "src/filePresent" {
     export function something(): number;
 }
+declare module "src/fileNotFound" {
+    export function something2(): number;
+}
+declare module "src/anotherFileReusingResolution" { }
 declare module "src/newFile" {
     export function foo(): number;
 }
