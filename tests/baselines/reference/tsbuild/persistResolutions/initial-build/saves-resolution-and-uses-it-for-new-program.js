@@ -1461,7 +1461,7 @@ export {};
 define(["require", "exports", "./filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
+    (0, filePresent_1.something)();
 });
 
 
@@ -1765,8 +1765,8 @@ Semantic diagnostics in builder refreshed for::
 define(["require", "exports", "./filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
-    filePresent_1.something();
+    (0, filePresent_1.something)();
+    (0, filePresent_1.something)();
 });
 
 

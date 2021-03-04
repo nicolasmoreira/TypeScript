@@ -431,7 +431,7 @@ define("src/anotherFileReusingResolution", ["require", "exports"], function (req
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
+    (0, filePresent_1.something)();
 });
 
 
@@ -448,7 +448,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 597,
+          "end": 602,
           "kind": "text"
         }
       ]
@@ -637,7 +637,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.js
 ----------------------------------------------------------------------
-text: (0-597)
+text: (0-602)
 define("src/filePresent", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
@@ -652,7 +652,7 @@ define("src/anotherFileReusingResolution", ["require", "exports"], function (req
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
+    (0, filePresent_1.something)();
 });
 
 ======================================================================
@@ -753,7 +753,7 @@ define("src/newFile", ["require", "exports"], function (require, exports) {
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
+    (0, filePresent_1.something)();
 });
 
 
@@ -771,7 +771,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 816,
+          "end": 821,
           "kind": "text"
         }
       ]
@@ -996,7 +996,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.js
 ----------------------------------------------------------------------
-text: (0-816)
+text: (0-821)
 define("src/filePresent", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
@@ -1018,7 +1018,7 @@ define("src/newFile", ["require", "exports"], function (require, exports) {
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
+    (0, filePresent_1.something)();
 });
 
 ======================================================================
@@ -1125,7 +1125,7 @@ define("src/newFile", ["require", "exports"], function (require, exports) {
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
+    (0, filePresent_1.something)();
 });
 
 
@@ -1144,7 +1144,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 1068,
+          "end": 1073,
           "kind": "text"
         }
       ]
@@ -1388,7 +1388,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.js
 ----------------------------------------------------------------------
-text: (0-1068)
+text: (0-1073)
 define("src/filePresent", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
@@ -1417,7 +1417,7 @@ define("src/newFile", ["require", "exports"], function (require, exports) {
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
+    (0, filePresent_1.something)();
 });
 
 ======================================================================
@@ -1465,7 +1465,7 @@ exitCode:: ExitStatus.Success
       "sections": [
         {
           "pos": 0,
-          "end": 1068,
+          "end": 1073,
           "kind": "text"
         }
       ]
@@ -1625,7 +1625,7 @@ define("src/newFile", ["require", "exports"], function (require, exports) {
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
+    (0, filePresent_1.something)();
 });
 
 
@@ -1644,7 +1644,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 1068,
+          "end": 1073,
           "kind": "text"
         }
       ]
@@ -1897,7 +1897,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.js
 ----------------------------------------------------------------------
-text: (0-1068)
+text: (0-1073)
 define("src/filePresent", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
@@ -1926,7 +1926,7 @@ define("src/newFile", ["require", "exports"], function (require, exports) {
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
+    (0, filePresent_1.something)();
 });
 
 ======================================================================
@@ -2010,8 +2010,8 @@ define("src/newFile", ["require", "exports"], function (require, exports) {
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
-    filePresent_1.something();
+    (0, filePresent_1.something)();
+    (0, filePresent_1.something)();
 });
 
 
@@ -2030,7 +2030,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 1100,
+          "end": 1110,
           "kind": "text"
         }
       ]
@@ -2283,7 +2283,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
 ======================================================================
 File:: /src/project/outFile.js
 ----------------------------------------------------------------------
-text: (0-1100)
+text: (0-1110)
 define("src/filePresent", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
@@ -2312,8 +2312,8 @@ define("src/newFile", ["require", "exports"], function (require, exports) {
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
-    filePresent_1.something();
+    (0, filePresent_1.something)();
+    (0, filePresent_1.something)();
 });
 
 ======================================================================

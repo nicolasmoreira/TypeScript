@@ -604,7 +604,7 @@ define("src/anotherFileReusingResolution", ["require", "exports"], function (req
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
+    (0, filePresent_1.something)();
 });
 
 
@@ -622,7 +622,7 @@ define("src/main", ["require", "exports", "src/filePresent"], function (require,
       "sections": [
         {
           "pos": 0,
-          "end": 581,
+          "end": 586,
           "kind": "text"
         }
       ]
@@ -918,7 +918,7 @@ define("src/newFile", ["require", "exports"], function (require, exports) {
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
+    (0, filePresent_1.something)();
 });
 
 
@@ -947,7 +947,7 @@ declare module "src/main" { }
       "sections": [
         {
           "pos": 0,
-          "end": 793,
+          "end": 798,
           "kind": "text"
         }
       ]
@@ -1278,7 +1278,7 @@ define("src/newFile", ["require", "exports"], function (require, exports) {
 define("src/main", ["require", "exports", "src/filePresent"], function (require, exports, filePresent_1) {
     "use strict";
     exports.__esModule = true;
-    filePresent_1.something();
+    (0, filePresent_1.something)();
 });
 
 
@@ -1311,7 +1311,7 @@ declare module "src/main" { }
       "sections": [
         {
           "pos": 0,
-          "end": 1038,
+          "end": 1043,
           "kind": "text"
         }
       ]
