@@ -10,6 +10,17 @@ namespace ts {
                     import { something } from "./filePresent";
                     import { something2 } from "./fileNotFound";`,
                 "/src/project/src/filePresent.ts": `export function something() { return 10; }`,
+                "/src/project/src/globalMain.ts": Utils.dedent`
+                        /// <reference path="./globalFilePresent.ts"/>
+                        /// <reference path="./globalFileNotFound.ts"/>
+                        function globalMain() { }
+                    `,
+                "/src/project/src/globalAnotherFileWithSameReferenes.ts": Utils.dedent`
+                        /// <reference path="./globalFilePresent.ts"/>
+                        /// <reference path="./globalFileNotFound.ts"/>
+                        function globalAnotherFileWithSameReferenes() { }
+                    `,
+                "/src/project/src/globalFilePresent.ts": `function globalSomething() { return 10; }`,
                 "/src/project/tsconfig.json": JSON.stringify({
                     compilerOptions: {
                         module: "amd",
@@ -29,6 +40,44 @@ namespace ts {
             commandLineArgs: ["--b", "src/project"],
             incrementalScenarios: [
                 noChangeRun,
+                {
+                    subScenario: "Modify globalMain file",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: fs => appendText(fs, `/src/project/src/globalMain.ts`, `globalSomething();`),
+                },
+                {
+                    subScenario: "Add new globalFile and update globalMain file",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: fs => {
+                        fs.writeFileSync(`/src/project/src/globalNewFile.ts`, "function globalFoo() { return 20; }");
+                        prependText(fs, `/src/project/src/globalMain.ts`, `/// <reference path="./globalNewFile.ts"/>
+`);
+                        appendText(fs, `/src/project/src/globalMain.ts`, `globalFoo();`);
+                    },
+                },
+                {
+                    subScenario: "Write file that could not be resolved by referenced path",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: fs => fs.writeFileSync(`/src/project/src/globalFileNotFound.ts`, "function globalSomething2() { return 20; }"),
+                },
+                {
+                    subScenario: "Clean resolutions",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: noop,
+                    commandLineArgs: ["--b", "src/project", "--cleanPersistedProgram"]
+                },
+                {
+                    subScenario: "Clean resolutions again",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: noop,
+                    commandLineArgs: ["--b", "src/project", "--cleanPersistedProgram"]
+                },
+                noChangeRun,
+                {
+                    subScenario: "Modify global main file",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: fs => appendText(fs, `/src/project/src/globalMain.ts`, `globalSomething();`),
+                },
                 {
                     subScenario: "Modify main file",
                     buildKind: BuildKind.IncrementalDtsChange,
@@ -60,6 +109,16 @@ namespace ts {
                         [`/src/project/src/main.d.ts`, CleanBuildDescrepancy.CleanFilePresent],
                         [`/src/project/src/newFile.js`, CleanBuildDescrepancy.CleanFilePresent],
                         [`/src/project/src/newFile.d.ts`, CleanBuildDescrepancy.CleanFilePresent],
+                        [`/src/project/src/globalFilePresent.js`, CleanBuildDescrepancy.CleanFilePresent],
+                        [`/src/project/src/globalFilePresent.d.ts`, CleanBuildDescrepancy.CleanFilePresent],
+                        [`/src/project/src/globalFileNotFound.js`, CleanBuildDescrepancy.CleanFilePresent],
+                        [`/src/project/src/globalFileNotFound.d.ts`, CleanBuildDescrepancy.CleanFilePresent],
+                        [`/src/project/src/globalAnotherFileWithSameReferenes.js`, CleanBuildDescrepancy.CleanFilePresent],
+                        [`/src/project/src/globalAnotherFileWithSameReferenes.d.ts`, CleanBuildDescrepancy.CleanFilePresent],
+                        [`/src/project/src/globalMain.js`, CleanBuildDescrepancy.CleanFilePresent],
+                        [`/src/project/src/globalMain.d.ts`, CleanBuildDescrepancy.CleanFilePresent],
+                        [`/src/project/src/globalNewFile.js`, CleanBuildDescrepancy.CleanFilePresent],
+                        [`/src/project/src/globalNewFile.d.ts`, CleanBuildDescrepancy.CleanFilePresent],
                         [`/src/project/tsconfig.tsbuildinfo`, CleanBuildDescrepancy.CleanFileTextDifferent],
                     ]),
                 },
@@ -92,6 +151,44 @@ namespace ts {
             commandLineArgs: ["--b", "src/project"],
             incrementalScenarios: [
                 noChangeRun,
+                {
+                    subScenario: "Modify globalMain file",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: fs => appendText(fs, `/src/project/src/globalMain.ts`, `globalSomething();`),
+                },
+                {
+                    subScenario: "Add new globalFile and update globalMain file",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: fs => {
+                        fs.writeFileSync(`/src/project/src/globalNewFile.ts`, "function globalFoo() { return 20; }");
+                        prependText(fs, `/src/project/src/globalMain.ts`, `/// <reference path="./globalNewFile.ts"/>
+`);
+                        appendText(fs, `/src/project/src/globalMain.ts`, `globalFoo();`);
+                    },
+                },
+                {
+                    subScenario: "Write file that could not be resolved by referenced path",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: fs => fs.writeFileSync(`/src/project/src/globalFileNotFound.ts`, "function globalSomething2() { return 20; }"),
+                },
+                {
+                    subScenario: "Clean resolutions",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: noop,
+                    commandLineArgs: ["--b", "src/project", "--cleanPersistedProgram"]
+                },
+                {
+                    subScenario: "Clean resolutions again",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: noop,
+                    commandLineArgs: ["--b", "src/project", "--cleanPersistedProgram"]
+                },
+                noChangeRun,
+                {
+                    subScenario: "Modify global main file",
+                    buildKind: BuildKind.IncrementalDtsChange,
+                    modifyFs: fs => appendText(fs, `/src/project/src/globalMain.ts`, `globalSomething();`),
+                },
                 {
                     subScenario: "Modify main file",
                     buildKind: BuildKind.IncrementalDtsChange,

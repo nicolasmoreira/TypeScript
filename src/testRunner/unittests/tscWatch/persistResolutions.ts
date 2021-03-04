@@ -20,6 +20,26 @@ namespace ts.tscWatch {
                     content: `export function something() { return 10; }`,
                 },
                 {
+                    path: `${projectRoot}/src/globalMain.ts`,
+                    content: Utils.dedent`
+                        /// <reference path="./globalFilePresent.ts"/>
+                        /// <reference path="./globalFileNotFound.ts"/>
+                        function globalMain() { }
+                    `,
+                },
+                {
+                    path: `${projectRoot}/src/globalAnotherFileWithSameReferenes.ts`,
+                    content: Utils.dedent`
+                        /// <reference path="./globalFilePresent.ts"/>
+                        /// <reference path="./globalFileNotFound.ts"/>
+                        function globalAnotherFileWithSameReferenes() { }
+                    `,
+                },
+                {
+                    path: `${projectRoot}/src/globalFilePresent.ts`,
+                    content: `function globalSomething() { return 10; }`,
+                },
+                {
                     path: `${projectRoot}/tsconfig.json`,
                     content: JSON.stringify({
                         compilerOptions: {
@@ -66,6 +86,26 @@ namespace ts.tscWatch {
             commandLineArgs: ["--p", ".", "-w", "--extendedDiagnostics"],
             changes: [
                 {
+                    caption: "Modify globalMain file",
+                    change: sys => sys.appendFile(`${projectRoot}/src/globalMain.ts`, `globalSomething();`),
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
+                    caption: "Add new globalFile and update globalMain file",
+                    change: sys => {
+                        sys.writeFile(`${projectRoot}/src/globalNewFile.ts`, "function globalFoo() { return 20; }");
+                        sys.prependFile(`${projectRoot}/src/globalMain.ts`, `/// <reference path="./globalNewFile.ts"/>
+`);
+                        sys.appendFile(`${projectRoot}/src/globalMain.ts`, `globalFoo();`);
+                    },
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
+                    caption: "Write file that could not be resolved by referenced path",
+                    change: sys => sys.writeFile(`${projectRoot}/src/globalFileNotFound.ts`, "function globalSomething2() { return 20; }"),
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
                     caption: "Modify main file",
                     change: sys => sys.appendFile(`${projectRoot}/src/main.ts`, `something();`),
                     timeouts: runQueuedTimeoutCallbacks,
@@ -95,6 +135,26 @@ namespace ts.tscWatch {
             commandLineArgs: ["--p", ".", "-w", "--extendedDiagnostics"],
             changes: [
                 {
+                    caption: "Modify globalMain file",
+                    change: sys => sys.appendFile(`${projectRoot}/src/globalMain.ts`, `globalSomething();`),
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
+                    caption: "Add new globalFile and update globalMain file",
+                    change: sys => {
+                        sys.writeFile(`${projectRoot}/src/globalNewFile.ts`, "function globalFoo() { return 20; }");
+                        sys.prependFile(`${projectRoot}/src/globalMain.ts`, `/// <reference path="./globalNewFile.ts"/>
+`);
+                        sys.appendFile(`${projectRoot}/src/globalMain.ts`, `globalFoo();`);
+                    },
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
+                    caption: "Write file that could not be resolved by referenced path",
+                    change: sys => sys.writeFile(`${projectRoot}/src/globalFileNotFound.ts`, "function globalSomething2() { return 20; }"),
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
                     caption: "Modify main file",
                     change: sys => sys.appendFile(`${projectRoot}/src/main.ts`, `something();`),
                     timeouts: runQueuedTimeoutCallbacks,
@@ -123,6 +183,26 @@ namespace ts.tscWatch {
             sys: getSysWithClearedResolutions,
             commandLineArgs: ["--p", ".", "-w", "--extendedDiagnostics"],
             changes: [
+                {
+                    caption: "Modify globalMain file",
+                    change: sys => sys.appendFile(`${projectRoot}/src/globalMain.ts`, `globalSomething();`),
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
+                    caption: "Add new globalFile and update globalMain file",
+                    change: sys => {
+                        sys.writeFile(`${projectRoot}/src/globalNewFile.ts`, "function globalFoo() { return 20; }");
+                        sys.prependFile(`${projectRoot}/src/globalMain.ts`, `/// <reference path="./globalNewFile.ts"/>
+`);
+                        sys.appendFile(`${projectRoot}/src/globalMain.ts`, `globalFoo();`);
+                    },
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
+                    caption: "Write file that could not be resolved by referenced path",
+                    change: sys => sys.writeFile(`${projectRoot}/src/globalFileNotFound.ts`, "function globalSomething2() { return 20; }"),
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
                 {
                     caption: "Modify main file",
                     change: sys => sys.appendFile(`${projectRoot}/src/main.ts`, `something();`),
@@ -154,6 +234,26 @@ namespace ts.tscWatch {
             commandLineArgs: ["--p", ".", "-w", "--extendedDiagnostics"],
             changes: [
                 {
+                    caption: "Modify globalMain file",
+                    change: sys => sys.appendFile(`${projectRoot}/src/globalMain.ts`, `globalSomething();`),
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
+                    caption: "Add new globalFile and update globalMain file",
+                    change: sys => {
+                        sys.writeFile(`${projectRoot}/src/globalNewFile.ts`, "function globalFoo() { return 20; }");
+                        sys.prependFile(`${projectRoot}/src/globalMain.ts`, `/// <reference path="./globalNewFile.ts"/>
+`);
+                        sys.appendFile(`${projectRoot}/src/globalMain.ts`, `globalFoo();`);
+                    },
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
+                    caption: "Write file that could not be resolved by referenced path",
+                    change: sys => sys.writeFile(`${projectRoot}/src/globalFileNotFound.ts`, "function globalSomething2() { return 20; }"),
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
                     caption: "Modify main file",
                     change: sys => sys.appendFile(`${projectRoot}/src/main.ts`, `something();`),
                     timeouts: runQueuedTimeoutCallbacks,
@@ -183,6 +283,26 @@ namespace ts.tscWatch {
             commandLineArgs: ["--p", ".", "-w", "--extendedDiagnostics"],
             changes: [
                 {
+                    caption: "Modify globalMain file",
+                    change: sys => sys.appendFile(`${projectRoot}/src/globalMain.ts`, `globalSomething();`),
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
+                    caption: "Add new globalFile and update globalMain file",
+                    change: sys => {
+                        sys.writeFile(`${projectRoot}/src/globalNewFile.ts`, "function globalFoo() { return 20; }");
+                        sys.prependFile(`${projectRoot}/src/globalMain.ts`, `/// <reference path="./globalNewFile.ts"/>
+`);
+                        sys.appendFile(`${projectRoot}/src/globalMain.ts`, `globalFoo();`);
+                    },
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
+                    caption: "Write file that could not be resolved by referenced path",
+                    change: sys => sys.writeFile(`${projectRoot}/src/globalFileNotFound.ts`, "function globalSomething2() { return 20; }"),
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
                     caption: "Modify main file",
                     change: sys => sys.appendFile(`${projectRoot}/src/main.ts`, `something();`),
                     timeouts: runQueuedTimeoutCallbacks,
@@ -211,6 +331,26 @@ namespace ts.tscWatch {
             sys: () => getSysWithClearedResolutions("outFile.js"),
             commandLineArgs: ["--p", ".", "-w", "--extendedDiagnostics"],
             changes: [
+                {
+                    caption: "Modify globalMain file",
+                    change: sys => sys.appendFile(`${projectRoot}/src/globalMain.ts`, `globalSomething();`),
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
+                    caption: "Add new globalFile and update globalMain file",
+                    change: sys => {
+                        sys.writeFile(`${projectRoot}/src/globalNewFile.ts`, "function globalFoo() { return 20; }");
+                        sys.prependFile(`${projectRoot}/src/globalMain.ts`, `/// <reference path="./globalNewFile.ts"/>
+`);
+                        sys.appendFile(`${projectRoot}/src/globalMain.ts`, `globalFoo();`);
+                    },
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
+                {
+                    caption: "Write file that could not be resolved by referenced path",
+                    change: sys => sys.writeFile(`${projectRoot}/src/globalFileNotFound.ts`, "function globalSomething2() { return 20; }"),
+                    timeouts: runQueuedTimeoutCallbacks,
+                },
                 {
                     caption: "Modify main file",
                     change: sys => sys.appendFile(`${projectRoot}/src/main.ts`, `something();`),
