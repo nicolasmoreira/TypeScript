@@ -412,9 +412,6 @@ Semantic diagnostics in builder refreshed for::
       "filesByName": {
         "./src/globalfilenotfound.ts": 0
       },
-      "missingPaths": [
-        "./src/globalfilenotfound.ts"
-      ],
       "fileProcessingDiagnostics": [
         {
           "kind": 1,
@@ -869,9 +866,6 @@ Semantic diagnostics in builder refreshed for::
       "filesByName": {
         "./src/globalfilenotfound.ts": 0
       },
-      "missingPaths": [
-        "./src/globalfilenotfound.ts"
-      ],
       "fileProcessingDiagnostics": [
         {
           "kind": 1,
@@ -1323,9 +1317,6 @@ Semantic diagnostics in builder refreshed for::
       "filesByName": {
         "./src/globalfilenotfound.ts": 0
       },
-      "missingPaths": [
-        "./src/globalfilenotfound.ts"
-      ],
       "fileProcessingDiagnostics": [
         {
           "kind": 1,

@@ -406,9 +406,6 @@ define("src/main", ["require", "exports"], function (require, exports) {
       "filesByName": {
         "./src/globalfilenotfound.ts": 0
       },
-      "missingPaths": [
-        "./src/globalfilenotfound.ts"
-      ],
       "fileProcessingDiagnostics": [
         {
           "kind": 1,
@@ -902,9 +899,6 @@ define("src/main", ["require", "exports"], function (require, exports) {
       "filesByName": {
         "./src/globalfilenotfound.ts": 0
       },
-      "missingPaths": [
-        "./src/globalfilenotfound.ts"
-      ],
       "fileProcessingDiagnostics": [
         {
           "kind": 1,
@@ -1394,9 +1388,6 @@ define("src/main", ["require", "exports"], function (require, exports) {
       "filesByName": {
         "./src/globalfilenotfound.ts": 0
       },
-      "missingPaths": [
-        "./src/globalfilenotfound.ts"
-      ],
       "fileProcessingDiagnostics": [
         {
           "kind": 1,

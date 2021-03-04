@@ -342,9 +342,6 @@ interface Array<T> { length: number; [n: number]: T; }
       "filesByName": {
         "./src/globalfilenotfound.ts": 0
       },
-      "missingPaths": [
-        "./src/globalfilenotfound.ts"
-      ],
       "fileProcessingDiagnostics": [
         {
           "kind": 1,
@@ -855,9 +852,6 @@ exitCode:: ExitStatus.undefined
       "filesByName": {
         "./src/globalfilenotfound.ts": 0
       },
-      "missingPaths": [
-        "./src/globalfilenotfound.ts"
-      ],
       "fileProcessingDiagnostics": [
         {
           "kind": 1,
@@ -1343,9 +1337,6 @@ exitCode:: ExitStatus.undefined
       "filesByName": {
         "./src/globalfilenotfound.ts": 0
       },
-      "missingPaths": [
-        "./src/globalfilenotfound.ts"
-      ],
       "fileProcessingDiagnostics": [
         {
           "kind": 1,

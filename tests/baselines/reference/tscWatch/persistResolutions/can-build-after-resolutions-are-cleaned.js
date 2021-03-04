@@ -599,9 +599,6 @@ exitCode:: ExitStatus.undefined
       "filesByName": {
         "./src/globalfilenotfound.ts": 0
       },
-      "missingPaths": [
-        "./src/globalfilenotfound.ts"
-      ],
       "fileProcessingDiagnostics": [
         {
           "kind": 1,
@@ -1025,9 +1022,6 @@ globalSomething();
       "filesByName": {
         "./src/globalfilenotfound.ts": 0
       },
-      "missingPaths": [
-        "./src/globalfilenotfound.ts"
-      ],
       "fileProcessingDiagnostics": [
         {
           "kind": 1,
@@ -1529,9 +1523,6 @@ declare function globalMain(): void;
       "filesByName": {
         "./src/globalfilenotfound.ts": 0
       },
-      "missingPaths": [
-        "./src/globalfilenotfound.ts"
-      ],
       "fileProcessingDiagnostics": [
         {
           "kind": 1,
